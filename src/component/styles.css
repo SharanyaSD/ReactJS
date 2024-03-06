@@ -7,7 +7,7 @@
     border: none;
     color: black;
     transition: 0.2s;
-    box-shadow: inset 0 0 5px black;
+    box-shadow: inset 0 0 5px rgb(128, 118, 118);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,20 +15,37 @@
     padding-left: 20px;
     margin-top: 40px;
   }
-.span {
-    color: #000000;
+
+.deletButton {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: rgb(187, 43, 43);
+    cursor: pointer;
+    transition: border-color 0.25s;
+    justify-content: space-evenly;
+
 }
+
+.deletAlign {
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+
 body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom right, #9a49f7, #000000);
+    background: linear-gradient(to bottom right, #d2b0fa, #f8f6f6);
   }
 
 .input:focus {
-    box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px 1000px rgba(150, 114, 170, 0.5);
     outline: none;
 }
 
@@ -40,21 +57,30 @@ body {
     right:0px;
     border: none;
     font-size: 15px;
-    background: #fa2f18;
     color:#fff;
     transition: 0.2s all;
     box-shadow: 0 0 10px black;
     cursor: pointer;
 }
 
-.input_submit:hover {
-    background-color: #aa1a0a;
+
+
+.input:hover {
+    background-color: #d4d1d1;
+    
+}
+
+.ToDoh1 {
+  font-size: 30px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .input_submit:active {
     transform: scale(0.9);
     box-shadow: 0 0 5px black;
-}
+}d
 
 .todos {
     display: flex;
@@ -65,32 +91,26 @@ body {
 
 
 
-.button {
+/* .button {
     margin-top: 30px;
-    background-color: red ;
+    border-radius: 10px;
+    background-color: rgb(175, 22, 22) ;
     margin-left: 30px;
     padding : 10px 100px;
 
-}
+} */
 
-.container {
-    width: 90%; 
-    max-width: 600px; 
-    background-color: white;
-    margin: 100px auto 20px; 
-    padding: 40px 30px 70px;
-    border-radius: 10px;
-    opacity: 0.7;
-    align-items: center;
-    padding-left: 60px;
-    margin-top: 50px;
-  }
-  
-  
-  .button  {
-    background-color: red;
-  }
+.addButton {
+  background-color: green;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding : 10px 100px;
+  border-radius: 20px;
+}
 
   .h1 {
     color: black;
+    align-items: center;
+    justify-content: space-between;
   }
+
