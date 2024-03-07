@@ -8,7 +8,7 @@ import { url } from "../utils/TodoApi";
 import "./styles.css";
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
-  const { data, loading, error } = useFetch();
+  const { loading, error } = useFetch();
   const { fetchPost } = usePost();
 
   useEffect(() => {
@@ -20,10 +20,11 @@ function Todo() {
   const addTodo = (title: string, dueDate: string) => {
     const newTodo = { id: todos.length + 1, title, dueDate, completed: false };
     const flag = fetchPost(newTodo);
-    if (flag) {
-      setTodos([...todos, newTodo]);
-      alert("Added sucessfully");
+    if (!flag) {
+      alert("Not added");
     }
+    setTodos([...todos, newTodo]);
+    alert("Added successfully");
   };
   console.log("Todos", todos);
 
