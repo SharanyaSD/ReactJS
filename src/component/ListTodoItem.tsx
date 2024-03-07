@@ -19,6 +19,7 @@ const ListTodoItem = (props: {
               id={todo.id}
               title={todo.title}
               completed={todo.completed}
+              dueDate={todo.dueDate}
               deleteTodo={props.deleteTodo}
               handleCheckbox={props.handleCheckbox}
             />

@@ -17,8 +17,8 @@ function Todo() {
       .then((data) => setTodos(data));
   }, []);
 
-  const addTodo = (title: string) => {
-    const newTodo = { id: todos.length + 1, title, completed: false };
+  const addTodo = (title: string, dueDate: string) => {
+    const newTodo = { id: todos.length + 1, title, dueDate, completed: false };
     const flag = fetchPost(newTodo);
     if (flag) {
       setTodos([...todos, newTodo]);

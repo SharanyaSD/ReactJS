@@ -5,12 +5,14 @@ const ShowTodo = ({
   id,
   title,
   completed,
+  dueDate,
   deleteTodo,
   handleCheckbox,
 }: {
   id: number;
   title: string;
   completed: boolean;
+  dueDate: string;
   deleteTodo: (id: number) => void;
   handleCheckbox: (id: number, checked: boolean) => void;
 }) => {
@@ -26,6 +28,13 @@ const ShowTodo = ({
         style={{ textDecoration: completed ? "line-through" : "none" }}
       >
         <label>{title}</label>
+        <label>
+          {dueDate && (
+            <div>
+              <span>Due Date: {dueDate}</span>
+            </div>
+          )}
+        </label>
         <div className="deletAlign">
           <button className="deletButton" onClick={() => deleteTodo(id)}>
             Delete
