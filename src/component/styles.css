@@ -41,7 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom right, #d2b0fa, #f8f6f6);
+    background: linear-gradient(to bottom right, #878688, #ffffff);
   }
 
 .input:focus {

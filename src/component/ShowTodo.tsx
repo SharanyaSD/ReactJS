@@ -12,7 +12,7 @@ const ShowTodo = ({
   id: string;
   title: string;
   completed: boolean;
-  dueDate: Date;
+  dueDate: string;
   deleteTodo: (id: string) => void;
   handleCheckbox: (id: string, checked: boolean) => void;
 }) => {

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { TodoInterface } from "../utils/TodoInterface";
 import AddTodo from "./AddTodo";
 import ListTodoItem from "./ListTodoItem";
-import useFetch from "./useFetch";
 import usePost from "./usePost";
 import { v4 as uuidv4 } from "uuid";
 import { url } from "../utils/TodoApi";
 import "./styles.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./Header";
+import useFetch from "./useFetch";
 
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
@@ -55,19 +57,25 @@ function Todo() {
   console.log({ todos });
   return (
     <>
-      <AddTodo addTodo={addTodo} />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/addtodo" element={<AddTodo addTodo={addTodo} />} />
 
-      {error ? (
-        <p> {error} </p>
-      ) : loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ListTodoItem
-          todos={todos}
-          deleteTodo={deleteTodo}
-          handleCheckbox={handleCheckbox}
-        />
-      )}
+          <Route
+            path="/"
+            element={
+              <ListTodoItem
+                todos={todos}
+                deleteTodo={deleteTodo}
+                handleCheckbox={handleCheckbox}
+                loading={loading}
+                error={error}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

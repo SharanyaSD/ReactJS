@@ -3,7 +3,7 @@ import { useState } from "react";
 const AddTodo = ({
   addTodo,
 }: {
-  addTodo: (title: string, dueDate: Date) => void;
+  addTodo: (title: string, dueDate: string) => void;
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -27,7 +27,7 @@ const AddTodo = ({
         <input
           className="input"
           placeholder="Enter a date"
-          type="date"
+          type="string"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
         />
