@@ -9,12 +9,12 @@ const ShowTodo = ({
   deleteTodo,
   handleCheckbox,
 }: {
-  id: number;
+  id: string;
   title: string;
   completed: boolean;
-  dueDate: string;
-  deleteTodo: (id: number) => void;
-  handleCheckbox: (id: number, checked: boolean) => void;
+  dueDate: Date;
+  deleteTodo: (id: string) => void;
+  handleCheckbox: (id: string, checked: boolean) => void;
 }) => {
   return (
     <>

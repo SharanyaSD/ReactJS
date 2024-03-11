@@ -1,5 +1,5 @@
 import { url } from "../utils/TodoApi";
-import { TodoInterface } from "../utils/todoInterface";
+import { TodoInterface } from "../utils/TodoInterface";
 
 const usePost = () => {
   const fetchPost = async (newTodo: TodoInterface) => {

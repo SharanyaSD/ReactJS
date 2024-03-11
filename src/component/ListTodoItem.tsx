@@ -1,12 +1,12 @@
 import React from "react";
-import { TodoInterface } from "../utils/todoInterface";
+import { TodoInterface } from "../utils/TodoInterface";
 import ShowTodo from "./ShowTodo";
 import "./styles.css";
 
 const ListTodoItem = (props: {
   todos: TodoInterface[];
-  deleteTodo: (id: number) => void;
-  handleCheckbox: (id: number, checked: boolean) => void;
+  deleteTodo: (id: string) => void;
+  handleCheckbox: (id: string, checked: boolean) => void;
 }) => {
   return (
     <div className="main-container">
