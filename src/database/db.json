@@ -35,6 +35,18 @@
       "title": "sixth task",
       "dueDate": "12/3/24",
       "completed": false
+    },
+    {
+      "id": "8693c166-0688-482f-b58b-4c2f4a4d171d",
+      "title": "new",
+      "dueDate": "",
+      "completed": false
+    },
+    {
+      "id": "14143c38-9cfb-4d80-b5f1-a3fb632eadd6",
+      "title": "newtodo",
+      "dueDate": "",
+      "completed": false
     }
   ]
 }

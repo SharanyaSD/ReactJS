@@ -2,7 +2,7 @@ import { url } from "../utils/TodoApi";
 import { TodoInterface } from "../utils/TodoInterface";
 
 const usePost = () => {
-  const fetchPost = async (newTodo: TodoInterface) => {
+  const postTodo = async (newTodo: TodoInterface) => {
     try {
       const data = await fetch(url, {
         method: "POST",
@@ -23,7 +23,7 @@ const usePost = () => {
     }
   };
 
-  return { fetchPost };
+  return postTodo;
 };
 
 export default usePost;

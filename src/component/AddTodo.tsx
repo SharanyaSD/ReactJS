@@ -1,15 +1,30 @@
 import { useState } from "react";
+import usePost from "./usePost";
+import { v4 as uuidv4 } from "uuid";
+import { TodoInterface } from "../utils/TodoInterface";
 
-const AddTodo = ({
-  addTodo,
-}: {
-  addTodo: (title: string, dueDate: string) => void;
-}) => {
+const AddTodo = () => {
   const [inputValue, setInputValue] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const postTodo = usePost();
 
   const handleAddTodo = () => {
-    addTodo(inputValue, dueDate);
+    const today = new Date();
+    const enteredDate = new Date(dueDate);
+    const newTodo: TodoInterface = {
+      id: uuidv4(),
+      title: inputValue,
+      dueDate,
+      completed: false,
+    };
+    if (enteredDate < today) {
+      alert("Invalid due date. Please enter a date that is not in the past.");
+      return;
+    }
+    postTodo(newTodo);
+
+    alert("Added successfully");
+
     setInputValue("");
     setDueDate("");
   };
@@ -27,7 +42,7 @@ const AddTodo = ({
         <input
           className="input"
           placeholder="Enter a date"
-          type="string"
+          type="date"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
         />
