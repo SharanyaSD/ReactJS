@@ -1,51 +1,22 @@
 {
   "tasks": [
+    
     {
-      "id": "1",
-      "title": "first task",
-      "completed": true,
-      "dueDate": "10/2/24"
-    },
-    {
-      "id": "2",
-      "title": "second task",
-      "completed": true,
-      "dueDate": "10/2/24"
-    },
-    {
-      "id": "3",
-      "title": "third task",
-      "completed": false,
-      "dueDate": "10/2/24"
-    },
-    {
-      "id": "4",
-      "title": "fourth task",
-      "completed": false,
-      "dueDate": "10/2/24"
-    },
-    {
-      "id": "5",
-      "title": "fifth task",
-      "dueDate": "3/3/23",
+      "id": "911bd120-cb38-4a96-8ae4-1c26d05b738e",
+      "title": "task",
+      "dueDate": "2024-03-21",
       "completed": false
     },
     {
-      "id": "9fad2a21-8d3c-4f86-be19-b4b3c652d346",
-      "title": "sixth task",
-      "dueDate": "12/3/24",
+      "id": "52a5329d-3263-4bc5-901d-5492e27ce9db",
+      "title": "hello",
+      "dueDate": "2024-03-29",
       "completed": false
     },
     {
-      "id": "8693c166-0688-482f-b58b-4c2f4a4d171d",
-      "title": "new",
-      "dueDate": "",
-      "completed": false
-    },
-    {
-      "id": "14143c38-9cfb-4d80-b5f1-a3fb632eadd6",
-      "title": "newtodo",
-      "dueDate": "",
+      "id": "c7790a2c-9826-4090-9d88-b6fcdac7c42f",
+      "title": "workk",
+      "dueDate": "2024-03-29",
       "completed": false
     }
   ]

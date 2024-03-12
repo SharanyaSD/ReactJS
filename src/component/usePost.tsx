@@ -23,7 +23,7 @@ const usePost = () => {
     }
   };
 
-  return postTodo;
+  return { postTodo };
 };
 
 export default usePost;

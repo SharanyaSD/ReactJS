@@ -6,7 +6,7 @@ import { TodoInterface } from "../utils/TodoInterface";
 const AddTodo = () => {
   const [inputValue, setInputValue] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const postTodo = usePost();
+  const { postTodo } = usePost();
 
   const handleAddTodo = () => {
     const today = new Date();
