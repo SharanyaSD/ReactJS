@@ -46,7 +46,7 @@ body {
   }
 
 .input:focus {
-    box-shadow: 0 0 10px 1000px rgba(150, 114, 170, 0.5);
+    box-shadow: 0 0 10px 1000px #878688;
     outline: none;
 }
 
@@ -69,6 +69,34 @@ body {
 .input:hover {
     background-color: #d4d1d1;
     
+}
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.page-item {
+  margin-right: 5px;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  border-radius: 3px;
+}
+
+.page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.active .page-link {
+  background-color: #007bff;
+  color: white;
 }
 
 .ToDoh1 {
