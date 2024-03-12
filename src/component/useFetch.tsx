@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { url } from "../utils/TodoApi";
-import { TodoInterface } from "../utils/todoInterface";
+import { TodoInterface } from "../utils/TodoInterface";
 
 interface FetchResult {
   loading: boolean;

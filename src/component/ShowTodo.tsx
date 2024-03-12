@@ -1,4 +1,6 @@
-import React from "react";
+// import React from "react";
+// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 const ShowTodo = ({
@@ -9,13 +11,17 @@ const ShowTodo = ({
   deleteTodo,
   handleCheckbox,
 }: {
-  id: number;
+  id: string;
   title: string;
   completed: boolean;
   dueDate: string;
-  deleteTodo: (id: number) => void;
-  handleCheckbox: (id: number, checked: boolean) => void;
+  deleteTodo: (id: string) => void;
+  handleCheckbox: (id: string, checked: boolean) => void;
 }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/todo/${id}`, { state: { id, title, completed, dueDate } });
+  };
   return (
     <>
       <input
@@ -27,7 +33,7 @@ const ShowTodo = ({
         className="span"
         style={{ textDecoration: completed ? "line-through" : "none" }}
       >
-        <label>{title}</label>
+        <h6 onClick={handleClick}>{title}</h6>
         <label>
           {dueDate && (
             <div>
@@ -36,7 +42,10 @@ const ShowTodo = ({
           )}
         </label>
         <div className="deletAlign">
-          <button className="deletButton" onClick={() => deleteTodo(id)}>
+          <button
+            className="btn btn-outline-danger"
+            onClick={() => deleteTodo(id)}
+          >
             Delete
           </button>
         </div>

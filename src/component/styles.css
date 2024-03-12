@@ -36,11 +36,14 @@
   margin-bottom: 30px;
 }
 
-  body {
-      margin: 0;
-      text-align: center;
-      background: linear-gradient(to bottom right, #d2b0fa, #f8f6f6);
-    }
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #878688, #ffffff);
+  }
 
 .input:focus {
     box-shadow: 0 0 10px 1000px rgba(150, 114, 170, 0.5);

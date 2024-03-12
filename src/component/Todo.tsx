@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { TodoInterface } from "../utils/todoInterface";
-import AddTodo from "./AddTodo";
+import { TodoInterface } from "../utils/TodoInterface";
 import ListTodoItem from "./ListTodoItem";
-import useFetch from "./useFetch";
-import usePost from "./usePost";
 import { url } from "../utils/TodoApi";
 import "./styles.css";
+
 import FilterBar from "./FilterBar";
+import useFetch from "./useFetch";
 
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
   const { data, loading, error } = useFetch();
-  const { fetchPost } = usePost();
 
   useEffect(() => {
     fetch(url)
@@ -19,25 +17,12 @@ function Todo() {
       .then((data) => setTodos(data));
   }, []);
 
-  const addTodo = (title: string, dueDate: string) => {
-    const newTodo = { id: todos.length + 1, title, dueDate, completed: false };
-    const flag = fetchPost(newTodo);
-    if (!flag) {
-      alert("Not added");
-    }
-    setTodos([...todos, newTodo]);
-    alert("Added successfully");
-  };
-
-  const deleteTodo = (id: number) => {
+  const deleteTodo = (id: string) => {
     const filterTodo = todos.filter((todo) => todo.id !== id);
     setTodos(filterTodo);
   };
 
-  // const updateTodoEndpoint = (id: number, completed: boolean) =>
-  //   `/api/todos/${id}completed=#{completed}`;
-
-  const handleCheckbox = (id: number, checked: boolean) => {
+  const handleCheckbox = (id: string, checked: boolean) => {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, completed: checked } : todo
     );
@@ -86,7 +71,6 @@ function Todo() {
 
   return (
     <>
-      <AddTodo addTodo={addTodo} />
       <FilterBar
         onSearch={handleSearch}
         onSortByTask={sortByTitle}
@@ -102,6 +86,8 @@ function Todo() {
           todos={todos}
           deleteTodo={deleteTodo}
           handleCheckbox={handleCheckbox}
+          loading={loading}
+          error={error}
         />
       )}
     </>
