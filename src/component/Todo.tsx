@@ -61,7 +61,7 @@ function Todo() {
   };
 
   const handleStatusChange = (value: string) => {
-    let filteredTodos = [...data];
+    let filteredTodos = [...todos];
     if (value === "completed")
       filteredTodos = filteredTodos.filter((todo) => todo.completed);
     else if (value === "incomplete")
