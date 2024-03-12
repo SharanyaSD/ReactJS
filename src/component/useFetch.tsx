@@ -1,51 +1,61 @@
-import { useState, useEffect } from "react";
 import { url } from "../utils/TodoApi";
-import { TodoInterface } from "../utils/TodoInterface";
+import { keepPreviousData } from "@tanstack/react-query";
 
-interface FetchResult {
-  loading: boolean;
-  error: string | null;
-  data: TodoInterface[];
-}
+import { useQuery } from "@tanstack/react-query";
 
-const useFetch = (): FetchResult => {
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string | null>(null);
-  // const [data, setData] = useState<TodoInterface[]>([]);
+// interface FetchResult {
+//   loading: boolean;
+//   error: string | null;
+//   data: TodoInterface[];
+// }
 
-  const [fetchData, setFetchData] = useState<FetchResult>({
-    data: [],
-    loading: true,
-    error: null,
+// const useFetch = (): FetchResult => {
+//   const [fetchData, setFetchData] = useState<FetchResult>({
+//     data: [],
+//     loading: true,
+//     error: null,
+//   });
+
+//   //to get desired data - list of todos we prse the response and get response body
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch todos");
+//         }
+//         const todos = await response.json();
+//         setFetchData({
+//           data: todos,
+//           loading: false,
+//           error: null,
+//         });
+//       } catch (error) {
+//         setFetchData({
+//           data: [],
+//           loading: false,
+//           error: `Error : ${error}`,
+//         });
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   return fetchData;
+// };
+
+const useFetch = () => {
+  // const queryClient = useQueryClient();
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["todos"],
+    placeholderData: keepPreviousData,
+
+    queryFn: async () => {
+      return fetch(url).then((res) => res.json());
+    },
   });
 
-  //to get desired data - list of todos we prse the response and get response body
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-        const todos = await response.json();
-        setFetchData({
-          data: todos,
-          loading: false,
-          error: null,
-        });
-      } catch (error) {
-        setFetchData({
-          data: [],
-          loading: false,
-          error: `Error : ${error}`,
-        });
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return fetchData;
+  return { data, isLoading, error };
 };
-
 export default useFetch;

@@ -1,7 +1,7 @@
 import React from "react";
 import { TodoInterface } from "../utils/TodoInterface";
-import ShowTodo from "./ShowTodo";
 import "./styles.css";
+import { useNavigate } from "react-router-dom";
 
 interface ListTodoItemProps {
   todos: TodoInterface[];
@@ -12,31 +12,57 @@ interface ListTodoItemProps {
 }
 
 const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
-  // const { loading, error } = useFetch();
-
+  const navigate = useNavigate();
+  // const handleClick = () => {
+  //   navigate(`/todo/${id}`, { state: { id, title, completed, dueDate } });
+  // };
   return (
     <div className="main-container">
       <h1 className="ToDoh1">Your to-do List </h1>
-      <ul>
-        {props.todos.map((todo) => (
-          <li key={todo.id}>
-            {props.error ? (
-              <p> {props.error} </p>
-            ) : props.loading ? (
-              <p>Loading...</p>
-            ) : (
-              <ShowTodo
-                id={todo.id}
-                title={todo.title}
-                completed={todo.completed}
-                dueDate={todo.dueDate}
-                deleteTodo={props.deleteTodo}
-                handleCheckbox={props.handleCheckbox}
+      {props.error && <p> {props.error}</p>}
+      {props.loading && <p> Loading... </p>}
+      {!props.loading && (
+        <ul>
+          {props.todos.map((todo) => (
+            <li key={todo.id}>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={(e) =>
+                  props.handleCheckbox(todo.id, e.target.checked)
+                }
               />
-            )}
-          </li>
-        ))}
-      </ul>
+              <span
+                className="span"
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "none",
+                }}
+              >
+                <h6
+                  onClick={() => navigate(`/todo/${todo.id}`, { state: todo })}
+                >
+                  {todo.title}
+                </h6>
+                <label>
+                  {todo.dueDate && (
+                    <div>
+                      <span>Due Date: {todo.dueDate}</span>
+                    </div>
+                  )}
+                </label>
+                <div className="deletAlign">
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => props.deleteTodo(todo.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

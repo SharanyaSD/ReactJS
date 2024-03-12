@@ -9,7 +9,7 @@ import useFetch from "./useFetch";
 
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
-  const { data, loading, error } = useFetch();
+  const { data, isLoading, error } = useFetch();
 
   useEffect(() => {
     fetch(url)
@@ -78,15 +78,16 @@ function Todo() {
         onStatusChange={handleStatusChange}
       />
       {error ? (
-        <p> {error} </p>
-      ) : loading ? (
+        // <p> {error} </p>
+        alert(error)
+      ) : isLoading ? (
         <p>Loading...</p>
       ) : (
         <ListTodoItem
           todos={todos}
           deleteTodo={deleteTodo}
           handleCheckbox={handleCheckbox}
-          loading={loading}
+          loading={isLoading}
           error={error}
         />
       )}

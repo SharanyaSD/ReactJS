@@ -3,18 +3,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../src/component/Header";
 import AddTodo from "./component/AddTodo";
 import TodoDetails from "./component/TodoDetails";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 const App = () => {
+  const queryClient = new QueryClient();
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Todo />} />
-        {/* <Route path="/todos/:id" element={<TodoRoutes/>} /> */}
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Todo />} />
+          {/* <Route path="/todos/:id" element={<TodoRoutes/>} /> */}
 
-        <Route path="/addtodo" element={<AddTodo />} />
-        <Route path="/todo/:id" element={<TodoDetails />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/addtodo" element={<AddTodo />} />
+          <Route path="/todo/:id" element={<TodoDetails />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 
