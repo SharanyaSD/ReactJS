@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-const FilterBar = ({
-  onSearch,
-  onSortByTask,
-  onSortByDueDate,
-  onStatusChange,
-}: {
+interface FilterBarProps {
+  setSortBy: (sort: string) => void;
   onSearch: (value: string) => void;
-  onSortByTask: () => void;
-  onSortByDueDate: () => void;
   onStatusChange: (value: string) => void;
+}
+
+const FilterBar: React.FC<FilterBarProps> = ({
+  setSortBy,
+  onSearch,
+  onStatusChange,
 }) => {
   const [searchItem, setSearchItem] = useState<string>("");
-  const [statusValue, setStatusValue] = useState<string>("");
+  const [statusValue, setStatusValue] = useState<string>("all");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     setSearchItem(e.target.value);
     onSearch(e.target.value);
   };
@@ -36,10 +35,10 @@ const FilterBar = ({
         onChange={handleSearchChange}
       />
 
-      <button className="sortBtn" onClick={onSortByTask}>
+      <button className="sortBtn" onClick={() => setSortBy("title")}>
         Sort by Task
       </button>
-      <button className="sortBtn" onClick={onSortByDueDate}>
+      <button className="sortBtn" onClick={() => setSortBy("dueDate")}>
         Sort by Due Date
       </button>
 

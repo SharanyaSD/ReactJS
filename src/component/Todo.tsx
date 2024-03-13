@@ -9,13 +9,15 @@ import useFetch from "./useFetch";
 import { useQueryClient } from "@tanstack/react-query";
 
 function Todo() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState<string>("none");
   const [todos, setTodos] = useState<TodoInterface[]>([]);
-  const { data, isLoading, error } = useFetch();
   const [status, setStatus] = useState<string>("all");
+  const { data, isLoading, error } = useFetch(currentPage, sortBy, status);
 
   useEffect(() => {
     if (data) {
-      setTodos(data);
+      setTodos(data.data);
     }
   }, [data]);
 
@@ -59,8 +61,6 @@ function Todo() {
     console.error("Error updating todo: ", error);
   };
 
-  console.log(todos);
-
   const handleSearch = (value: string) => {
     if (value === "") {
       setTodos(data);
@@ -70,24 +70,6 @@ function Todo() {
       );
       setTodos(filterTodos);
     }
-  };
-
-  const sortByTitle = () => {
-    const sortedTodos = [...todos].sort((a, b) => {
-      if (a.title > b.title) return 1;
-      if (a.title < b.title) return -1;
-      return 0;
-    });
-    setTodos(sortedTodos);
-  };
-
-  const sortByDate = () => {
-    const sortedTodos = [...todos].sort((a, b) => {
-      if (a.dueDate > b.dueDate) return 1;
-      if (a.dueDate < b.dueDate) return -1;
-      return 0;
-    });
-    setTodos(sortedTodos);
   };
 
   const handleStatusChange = (value: string) => {
@@ -110,18 +92,20 @@ function Todo() {
   return (
     <>
       <FilterBar
+        setSortBy={setSortBy}
         onSearch={handleSearch}
-        onSortByTask={sortByTitle}
-        onSortByDueDate={sortByDate}
         onStatusChange={handleStatusChange}
       />
 
       <ListTodoItem
+        currentPage={currentPage}
+        setCurrentpage={setCurrentPage}
         todos={filteredTodoByStatus}
         deleteTodo={deleteTodo}
         handleCheckbox={handleCheckbox}
         loading={isLoading}
         error={error}
+        pages={data.pages}
       />
     </>
   );

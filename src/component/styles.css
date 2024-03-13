@@ -106,10 +106,10 @@ body {
   margin-bottom: 20px;
 }
 
-.input_submit:active {
+/* .input_submit:active {
     transform: scale(0.9);
     box-shadow: 0 0 5px black;
-}
+} */
 .todos {
     display: flex;
     width: 90%;

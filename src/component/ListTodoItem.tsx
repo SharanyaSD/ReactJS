@@ -1,9 +1,10 @@
-import React, { useState } from "react";
 import { TodoInterface } from "../utils/TodoInterface";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 
 interface ListTodoItemProps {
+  currentPage: number;
+  setCurrentpage: (x: number) => void;
   todos: TodoInterface[];
   deleteTodo: (id: string) => void;
   handleCheckbox: (
@@ -14,21 +15,15 @@ interface ListTodoItemProps {
   ) => void;
   loading?: boolean;
   error?: string | null;
+
+  pages?: number;
 }
 
 const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = props.todos.slice(
-    indexOfFirstRecord,
-    indexOfLastRecord
-  );
+  const { currentPage, setCurrentpage } = props;
+  const currentRecords = props.todos;
+
   const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate(`/todo/${id}`, { state: { id, title, completed, dueDate } });
-  // };
 
   const renderRecords = currentRecords.map((todo) => (
     <li key={todo.id}>
@@ -72,9 +67,8 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
     </li>
   ));
 
-  const totalPages = Math.ceil(props.todos.length / recordsPerPage);
   const handlePageClick = (pageNo: number) => {
-    setCurrentPage(pageNo);
+    setCurrentpage(pageNo);
   };
 
   return (
@@ -83,52 +77,49 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
 
       <>
         <ul>{renderRecords}</ul>
-        {totalPages > 1 && (
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              {/* Handling condition for no prev page */}
-              <li className={`page-item ${currentPage == 1 ? "disabled" : ""}`}>
-                <a
-                  className="page-link"
-                  onClick={() => handlePageClick(currentPage - 1)}
-                  href={`#${currentPage - 1}`}
-                >
-                  Previous
-                </a>
-              </li>
 
-              {/* create array with length totalPages -5 */}
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <li key={index} className="page-item active">
-                  <a
-                    className={`page-link ${
-                      currentPage == index + 1 ? "active" : ""
-                    }`}
-                    onClick={() => handlePageClick(index + 1)}
-                    href={`#${index + 1}`}
-                  >
-                    {index + 1}
-                  </a>
-                </li>
-              ))}
-
-              {/* Handling condition for no next page */}
-              <li
-                className={`page-item ${
-                  currentPage == totalPages ? "disabled" : ""
-                }`}
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            {/* Handling condition for no prev page */}
+            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+              <button
+                className="page-link"
+                onClick={() => setCurrentpage(currentPage - 1)}
+                disabled={currentPage === 1}
               >
-                <a
-                  className="page-link"
-                  onClick={() => handlePageClick(currentPage + 1)}
-                  href={`#${currentPage + 1}`}
-                >
-                  Next
-                </a>
+                Previous
+              </button>
+            </li>
+
+            {/* create array with length totalPages -5 */}
+            {Array.from({ length: props.pages }).map((_, index) => (
+              <li
+                key={index}
+                className={`page-link ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+                onClick={() => handlePageClick(index + 1)}
+              >
+                {index + 1}
               </li>
-            </ul>
-          </nav>
-        )}
+            ))}
+
+            {/* Handling condition for no next page */}
+            <li
+              className={`page-item ${
+                currentPage === props.pages ? "disabled" : ""
+              }`}
+            >
+              <button
+                className="page-link"
+                onClick={() => handlePageClick(currentPage + 1)}
+                disabled={currentPage === props.pages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
       </>
     </div>
   );
