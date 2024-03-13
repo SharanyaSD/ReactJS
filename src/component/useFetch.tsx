@@ -1,7 +1,5 @@
 import { url } from "../utils/TodoApi";
-import { keepPreviousData } from "@tanstack/react-query";
-
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // interface FetchResult {
 //   loading: boolean;

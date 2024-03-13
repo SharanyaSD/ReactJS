@@ -12,8 +12,8 @@ const FilterBar = ({
   onSortByDueDate: () => void;
   onStatusChange: (value: string) => void;
 }) => {
-  const [searchItem, setSearchItem] = useState("");
-  const [statusValue, setStatusValue] = useState("");
+  const [searchItem, setSearchItem] = useState<string>("");
+  const [statusValue, setStatusValue] = useState<string>("");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchItem(e.target.value);

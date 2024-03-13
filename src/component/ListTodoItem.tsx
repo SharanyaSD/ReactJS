@@ -19,50 +19,43 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
   return (
     <div className="main-container">
       <h1 className="ToDoh1">Your to-do List </h1>
-      {props.error && <p> {props.error}</p>}
-      {props.loading && <p> Loading... </p>}
-      {!props.loading && (
-        <ul>
-          {props.todos.map((todo) => (
-            <li key={todo.id}>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={(e) =>
-                  props.handleCheckbox(todo.id, e.target.checked)
-                }
-              />
-              <span
-                className="span"
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
-              >
-                <h6
-                  onClick={() => navigate(`/todo/${todo.id}`, { state: todo })}
+
+      <ul>
+        {props.todos.map((todo) => (
+          <li key={todo.id}>
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={(e) => props.handleCheckbox(todo.id, e.target.checked)}
+            />
+            <span
+              className="span"
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+              }}
+            >
+              <h6 onClick={() => navigate(`/todo/${todo.id}`, { state: todo })}>
+                {todo.title}
+              </h6>
+              <label>
+                {todo.dueDate && (
+                  <div>
+                    <span>Due Date: {todo.dueDate}</span>
+                  </div>
+                )}
+              </label>
+              <div className="deletAlign">
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => props.deleteTodo(todo.id)}
                 >
-                  {todo.title}
-                </h6>
-                <label>
-                  {todo.dueDate && (
-                    <div>
-                      <span>Due Date: {todo.dueDate}</span>
-                    </div>
-                  )}
-                </label>
-                <div className="deletAlign">
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => props.deleteTodo(todo.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
+                  Delete
+                </button>
+              </div>
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -69,6 +69,13 @@ function Todo() {
     setTodos(filteredTodos);
   };
 
+  if (error) {
+    return <>{error}</>;
+  }
+
+  if (isLoading) {
+    return <>Loading..</>;
+  }
   return (
     <>
       <FilterBar
@@ -77,20 +84,14 @@ function Todo() {
         onSortByDueDate={sortByDate}
         onStatusChange={handleStatusChange}
       />
-      {error ? (
-        // <p> {error} </p>
-        alert(error)
-      ) : isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <ListTodoItem
-          todos={todos}
-          deleteTodo={deleteTodo}
-          handleCheckbox={handleCheckbox}
-          loading={isLoading}
-          error={error}
-        />
-      )}
+
+      <ListTodoItem
+        todos={todos}
+        deleteTodo={deleteTodo}
+        handleCheckbox={handleCheckbox}
+        loading={isLoading}
+        error={error}
+      />
     </>
   );
 }
