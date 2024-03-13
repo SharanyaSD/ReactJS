@@ -6,6 +6,7 @@ import "./styles.css";
 
 import FilterBar from "./FilterBar";
 import useFetch from "./useFetch";
+// import { useQueryClient } from "react-query";
 
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
@@ -17,12 +18,25 @@ function Todo() {
       .then((data) => setTodos(data));
   }, []);
 
-  const deleteTodo = (id: string) => {
+  // const queryClient = useQueryClient();
+  const deleteTodo = async (id: string) => {
+    await fetch(`${url}/${id}`, { method: "DELETE" });
     const filterTodo = todos.filter((todo) => todo.id !== id);
     setTodos(filterTodo);
   };
 
-  const handleCheckbox = (id: string, checked: boolean) => {
+  // const deleteTodo = async (id: string) => {
+  //   console.log("Working delete");
+  //   try {
+  //     await fetch(`${url}/${id}`, { method: "DELETE" });
+  //     queryClient.refetchQueries(["todoList"]);
+  //   } catch (error) {
+  //     console.error("Error deleting todo: ", error);
+  //   }
+  // };
+
+  const handleCheckbox = async (id: string, checked: boolean) => {
+    await fetch(`${url}/${id}, {method}`);
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, completed: checked } : todo
     );
