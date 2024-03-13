@@ -6,41 +6,57 @@ import "./styles.css";
 
 import FilterBar from "./FilterBar";
 import useFetch from "./useFetch";
-// import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Todo() {
   const [todos, setTodos] = useState<TodoInterface[]>([]);
   const { data, isLoading, error } = useFetch();
+  const [status, setStatus] = useState<string>("all");
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setTodos(data));
-  }, []);
+    if (data) {
+      setTodos(data);
+    }
+  }, [data]);
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+
   const deleteTodo = async (id: string) => {
-    await fetch(`${url}/${id}`, { method: "DELETE" });
-    const filterTodo = todos.filter((todo) => todo.id !== id);
-    setTodos(filterTodo);
+    try {
+      await fetch(`${url}/${id}`, { method: "DELETE" });
+      queryClient.refetchQueries({ queryKey: ["todos"] });
+    } catch (error) {
+      console.error("Error deleting todo: ", error);
+    }
   };
 
-  // const deleteTodo = async (id: string) => {
-  //   console.log("Working delete");
-  //   try {
-  //     await fetch(`${url}/${id}`, { method: "DELETE" });
-  //     queryClient.refetchQueries(["todoList"]);
-  //   } catch (error) {
-  //     console.error("Error deleting todo: ", error);
-  //   }
-  // };
-
-  const handleCheckbox = async (id: string, checked: boolean) => {
-    await fetch(`${url}/${id}, {method}`);
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: checked } : todo
-    );
-    setTodos(updatedTodos);
+  const handleCheckbox = async (
+    id: string,
+    title: string,
+    checked: boolean,
+    dueDate: string
+  ) => {
+    try {
+      const updatedTodos = todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: checked } : todo
+      );
+      setTodos(updatedTodos);
+      await fetch(`${url}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, title, completed: checked, dueDate }),
+      });
+      // queryClient.refetchQueries({ queryKey: ["todos"] });
+    } catch (error) {
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo.id === id ? { ...todo, completed: !checked } : todo
+        )
+      );
+    }
+    console.error("Error updating todo: ", error);
   };
 
   console.log(todos);
@@ -75,13 +91,21 @@ function Todo() {
   };
 
   const handleStatusChange = (value: string) => {
-    let filteredTodos = [...todos];
-    if (value === "completed")
-      filteredTodos = filteredTodos.filter((todo) => todo.completed);
-    else if (value === "incomplete")
-      filteredTodos = filteredTodos.filter((todo) => !todo.completed);
-    setTodos(filteredTodos);
+    setStatus(value);
   };
+
+  const filteredTodoByStatus =
+    status === "all"
+      ? todos
+      : todos.filter((todo) => String(todo.completed) === status);
+
+  if (error) {
+    return <>{error}</>;
+  }
+
+  if (isLoading) {
+    return <>Loading..</>;
+  }
 
   return (
     <>
@@ -91,20 +115,14 @@ function Todo() {
         onSortByDueDate={sortByDate}
         onStatusChange={handleStatusChange}
       />
-      {error ? (
-        // <p> {error} </p>
-        alert(error)
-      ) : isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <ListTodoItem
-          todos={todos}
-          deleteTodo={deleteTodo}
-          handleCheckbox={handleCheckbox}
-          loading={isLoading}
-          error={error}
-        />
-      )}
+
+      <ListTodoItem
+        todos={filteredTodoByStatus}
+        deleteTodo={deleteTodo}
+        handleCheckbox={handleCheckbox}
+        loading={isLoading}
+        error={error}
+      />
     </>
   );
 }

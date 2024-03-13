@@ -12,10 +12,11 @@ const FilterBar = ({
   onSortByDueDate: () => void;
   onStatusChange: (value: string) => void;
 }) => {
-  const [searchItem, setSearchItem] = useState("");
-  const [statusValue, setStatusValue] = useState("");
+  const [searchItem, setSearchItem] = useState<string>("");
+  const [statusValue, setStatusValue] = useState<string>("");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setSearchItem(e.target.value);
     onSearch(e.target.value);
   };
@@ -47,9 +48,9 @@ const FilterBar = ({
         value={statusValue}
         onChange={handleStatusChange}
       >
-        <option value="">Status</option>
-        <option value="completed">Completed</option>
-        <option value="incomplete">Incompleted</option>
+        <option value="all">All</option>
+        <option value="true">Completed</option>
+        <option value="false">Incompleted</option>
       </select>
     </div>
   );
