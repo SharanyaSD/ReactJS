@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { TodoInterface } from "../utils/TodoInterface";
 import ListTodoItem from "./ListTodoItem";
 import { url } from "../utils/TodoApi";
@@ -8,16 +8,48 @@ import FilterBar from "./FilterBar";
 import useFetch from "./useFetch";
 import { useQueryClient } from "@tanstack/react-query";
 
+type State = {
+  currentPage: number;
+  sortBy: string;
+  todos: TodoInterface[];
+  status: string;
+};
+
+type Action =
+  | { type: "SET_TODOS"; payload: TodoInterface[] }
+  | { type: "SET_STATUS"; payload: string }
+  | { type: "SET_SORT_BY"; payload: string }
+  | { type: "SET_CURRENT_PAGE"; payload: number };
+
+const todoReducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "SET_TODOS":
+      return { ...state, todos: action.payload };
+    case "SET_STATUS":
+      return { ...state, status: action.payload };
+    case "SET_SORT_BY":
+      return { ...state, sortBy: action.payload };
+    case "SET_CURRENT_PAGE":
+      return { ...state, currentPage: action.payload };
+    default:
+      return state;
+  }
+};
 function Todo() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy, setSortBy] = useState<string>("none");
-  const [todos, setTodos] = useState<TodoInterface[]>([]);
-  const [status, setStatus] = useState<string>("all");
+  const initialState: State = {
+    currentPage: 1,
+    sortBy: "none",
+    todos: [],
+    status: "all",
+  };
+
+  const [state, dispatch] = useReducer(todoReducer, initialState);
+  const { currentPage, sortBy, todos, status } = state;
   const { data, isLoading, error } = useFetch(currentPage, sortBy, status);
 
   useEffect(() => {
     if (data) {
-      setTodos(data.data);
+      dispatch({ type: "SET_TODOS", payload: data.data });
     }
   }, [data]);
 
@@ -42,7 +74,8 @@ function Todo() {
       const updatedTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, completed: checked } : todo
       );
-      setTodos(updatedTodos);
+      dispatch({ type: "SET_TODOS", payload: updatedTodos });
+
       await fetch(`${url}/${id}`, {
         method: "PUT",
         headers: {
@@ -50,30 +83,25 @@ function Todo() {
         },
         body: JSON.stringify({ id, title, completed: checked, dueDate }),
       });
-      // queryClient.refetchQueries({ queryKey: ["todos"] });
     } catch (error) {
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) =>
-          todo.id === id ? { ...todo, completed: !checked } : todo
-        )
-      );
+      console.error("error updating todo: ", error);
+      dispatch({ type: "SET_TODOS", payload: todos });
     }
-    console.error("Error updating todo: ", error);
   };
 
   const handleSearch = (value: string) => {
     if (value === "") {
-      setTodos(data);
+      dispatch({ type: "SET_TODOS", payload: data });
     } else {
       const filterTodos = todos.filter((todo) =>
         todo.title.toLowerCase().includes(value.toLowerCase())
       );
-      setTodos(filterTodos);
+      dispatch({ type: "SET_TODOS", payload: filterTodos });
     }
   };
 
   const handleStatusChange = (value: string) => {
-    setStatus(value);
+    dispatch({ type: "SET_STATUS", payload: value });
   };
 
   const filteredTodoByStatus =
@@ -92,14 +120,18 @@ function Todo() {
   return (
     <>
       <FilterBar
-        setSortBy={setSortBy}
+        setSortBy={(value: string) =>
+          dispatch({ type: "SET_SORT_BY", payload: value })
+        }
         onSearch={handleSearch}
         onStatusChange={handleStatusChange}
       />
 
       <ListTodoItem
         currentPage={currentPage}
-        setCurrentpage={setCurrentPage}
+        setCurrentpage={(value: number) =>
+          dispatch({ type: "SET_CURRENT_PAGE", payload: value })
+        }
         todos={filteredTodoByStatus}
         deleteTodo={deleteTodo}
         handleCheckbox={handleCheckbox}

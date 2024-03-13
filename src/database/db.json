@@ -13,12 +13,6 @@
       "dueDate": "2024-03-16"
     },
     {
-      "id": "70e52878-c824-4969-968c-57e9f55843bf",
-      "title": "Task 3",
-      "completed": true,
-      "dueDate": "2024-03-18"
-    },
-    {
       "id": "9b5a94e2-20cb-4f94-8d9c-3b02307bde12",
       "title": "task 6",
       "completed": true,
@@ -39,8 +33,14 @@
     {
       "id": "f7fcde1d-1c91-4f99-9cae-4b1924bd6417",
       "title": "todo000",
-      "completed": true,
+      "completed": false,
       "dueDate": "2024-03-21"
+    },
+    {
+      "id": "651afdea-44c1-4d9d-978d-2010c9ddeb7f",
+      "title": "useReducer check",
+      "completed": true,
+      "dueDate": "2024-03-16"
     }
   ]
 }

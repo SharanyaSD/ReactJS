@@ -91,7 +91,6 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
               </button>
             </li>
 
-            {/* create array with length totalPages -5 */}
             {Array.from({ length: props.pages }).map((_, index) => (
               <li
                 key={index}
