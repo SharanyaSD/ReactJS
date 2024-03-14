@@ -1,27 +1,23 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">To-Do</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-            <Nav.Link>
-              {" "}
-              <Link to="/addtodo">Add Todo</Link>
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <div className="container-fluid">
+        <h1 className="navbar-brand">To-Do</h1>
+
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <Link to="/" className="nav-link active" aria-current="page">
+              Home
+            </Link>
+            <Link to="/addtodo" className="nav-link active" aria-current="page">
+              Add Todo
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }
 

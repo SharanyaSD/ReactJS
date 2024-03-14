@@ -30,7 +30,7 @@ const AddTodo = () => {
   };
 
   return (
-    <div>
+    <div className="addTodoForm">
       <form>
         <input
           className="input"

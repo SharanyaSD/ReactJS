@@ -1,20 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Angkor&display=swap');
+
 .input {
-    height: 40px;
-    width: 250px;
+  width: 500px;
+    height: 60px;
+    flex: 1;
     border-radius: 50px;
     padding: 20px 30px;
     font-size: 25px;
     border: none;
     color: black;
     transition: 0.2s;
-    box-shadow: inset 0 0 5px rgb(128, 118, 118);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background-color: white;
-    padding-left: 20px;
-    margin-top: 40px;
+    margin-top: 10px;
+    
   }
+  .input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex: 1;
+  }
+
+  .filter-bar {
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+  }
+
+
+  .filterButtons {
+    padding: 10px;
+  }
+
 
 .deletButton {
     border-radius: 8px;
@@ -37,18 +60,13 @@
 }
 
 body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     background: linear-gradient(to bottom right, #878688, #ffffff);
   }
 
-.input:focus {
+/* .input:focus {
     box-shadow: 0 0 10px 1000px #878688;
     outline: none;
-}
+} */
 
 .input_submit{
     width: 120px;
@@ -64,7 +82,12 @@ body {
     cursor: pointer;
 }
 
-
+.AppComponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
 
 .input:hover {
     background-color: #d4d1d1;
@@ -101,15 +124,16 @@ body {
 
 .ToDoh1 {
   font-size: 30px;
-  margin-left: 20px;
+  margin-left: 250px;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+  font-family: Angkor;
 }
 
-/* .input_submit:active {
+.input_submit:active {
     transform: scale(0.9);
     box-shadow: 0 0 5px black;
-} */
+}
 .todos {
     display: flex;
     width: 90%;
@@ -194,3 +218,62 @@ body {
   .statusDropdown:hover .dropbtn {
     background-color: #3e8e41;
   }
+
+
+.main-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto; 
+  padding: 20px;
+}
+
+.todoListContainer {
+ 
+  margin-bottom: 10px; 
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5); 
+  padding: 10px; 
+  border-radius: 30px; 
+}
+
+.addTodoForm {
+  display: flex;
+  margin-bottom: 10px; 
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.5); 
+  padding: 10px; 
+  border-radius: 30px;
+  margin: 195px;
+}
+
+
+.filter-bar {
+  background-color: rgba(255, 255, 255, 0.5); 
+  
+}
+
+.todoList {
+  display:flex;
+  justify-content:space-evenly;
+  border-bottom: 1.5px solid #cfcdcd; 
+  padding: 5px 0;
+  width: 100%; 
+
+}
+
+
+.todoList .deletAlign {
+  margin-left: 250px;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 20px;
+}
+
+
