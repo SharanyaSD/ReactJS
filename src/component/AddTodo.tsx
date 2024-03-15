@@ -18,7 +18,7 @@ const AddTodo = () => {
       completed: false,
     };
     if (enteredDate < today) {
-      alert("Invalid due date. Please enter a date that is not in the past.");
+      alert("Please enter a date that is not in the past");
       return;
     }
     postTodo(newTodo);
@@ -54,6 +54,7 @@ const AddTodo = () => {
             e.preventDefault();
             handleAddTodo();
           }}
+          disabled={!inputValue || !dueDate}
         >
           ADD
         </button>
