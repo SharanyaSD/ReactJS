@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, getByText, render, screen } from "@testing-library/react";
 import AddTodo from "./AddTodo";
 import "@testing-library/jest-dom/extend-expect";
 // import { usePostMock } from "./__mocks__/usePost";
@@ -40,6 +40,36 @@ describe("AddTodo", () => {
     expect(addButton).toBeEnabled();
   });
 
+  test("Input fileds are initially empty", () => {
+    render(<AddTodo />);
+    const input = screen.getByPlaceholderText("Enter a todo...");
+    const dateInput = screen.getByPlaceholderText("Enter a date");
+    expect(input).toHaveValue("");
+    expect(dateInput).toHaveValue("");
+  });
+
+  test("Input fields updated when text added to it", () => {
+    render(<AddTodo />);
+    const input = screen.getByPlaceholderText("Enter a todo...");
+    const dateInput = screen.getByPlaceholderText("Enter a date");
+    fireEvent.change(input, { target: { value: "New Todo" } });
+    fireEvent.change(dateInput, { target: { value: "2024-10-10" } });
+    expect(input).toHaveValue("New Todo");
+    expect(dateInput).toHaveValue("2024-10-10");
+  });
+
+  test("Input fields cleared once add button clicked for previous todo", () => {
+    render(<AddTodo />);
+    const input = screen.getByPlaceholderText("Enter a todo...");
+    const dateInput = screen.getByPlaceholderText("Enter a date");
+    const addButton = screen.getByText("ADD");
+    fireEvent.change(input, { target: { value: "New Todo" } });
+    fireEvent.change(dateInput, { target: { value: "2024-10-10" } });
+    fireEvent.click(addButton);
+    expect(input).toHaveValue("");
+    expect(dateInput).toHaveValue("");
+  });
+
   // test("Error when added dueDate of past", () => {
   //   render(<AddTodo />);
   //   const input = screen.getByPlaceholderText("Enter a todo...");
@@ -48,7 +78,9 @@ describe("AddTodo", () => {
   //   fireEvent.change(input, { target: { value: "New Todo" } });
   //   fireEvent.change(dateInput, { target: { value: "2024-10-10" } });
   //   fireEvent.click(addButton);
-  //   const errorMessage = screen.getByText(`${testProps.pastDueDate}`);
+  //   const errorMessage = screen.getByText(
+  //     "Please enter a date that is not in the past"
+  //   );
   //   expect(errorMessage).toBeDefined();
   // });
 
@@ -70,6 +102,8 @@ describe("AddTodo", () => {
   //   });
   // });
 });
+
+//Test cases -
 //initially input add and date is empty
 //add todo successfully
 //input field and date picker are updated when the user types in the input field or selects a date
