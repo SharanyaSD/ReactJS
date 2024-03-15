@@ -71,6 +71,10 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
     setCurrentpage(pageNo);
   };
 
+  const paginationArray = new Array(props.pages)
+    .fill(0)
+    .map((_, index) => index + 1);
+
   return (
     <div className="main-container">
       <h1 className="ToDoh1">Your to-do List </h1>
@@ -92,15 +96,19 @@ const ListTodoItem: React.FC<ListTodoItemProps> = (props) => {
             </li>
 
             {/* create array with length totalPages -5 */}
-            {Array.from({ length: props.pages }).map((_, index) => (
+            {paginationArray.map((pageNo) => (
               <li
-                key={index}
-                className={`page-link ${
-                  currentPage === index + 1 ? "active" : ""
+                key={pageNo}
+                className={`page-item ${
+                  currentPage === pageNo ? "active" : ""
                 }`}
-                onClick={() => handlePageClick(index + 1)}
               >
-                {index + 1}
+                <button
+                  className="page-link"
+                  onClick={() => handlePageClick(pageNo)}
+                >
+                  {pageNo}
+                </button>
               </li>
             ))}
 
