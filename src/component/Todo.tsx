@@ -22,10 +22,13 @@ function Todo() {
     setTodos(filterTodo);
   };
 
-  const handleCheckbox = (id: string, checked: boolean) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: checked } : todo
-    );
+  const handleCheckbox = (id: string) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
     setTodos(updatedTodos);
   };
 
@@ -62,10 +65,13 @@ function Todo() {
 
   const handleStatusChange = (value: string) => {
     let filteredTodos = [...todos];
-    if (value === "completed")
+
+    if (value === "completed") {
       filteredTodos = filteredTodos.filter((todo) => todo.completed);
-    else if (value === "incomplete")
+    } else if (value === "incomplete") {
       filteredTodos = filteredTodos.filter((todo) => !todo.completed);
+    }
+
     setTodos(filteredTodos);
   };
 
